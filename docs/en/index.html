@@ -16,6 +16,8 @@
   body::before { content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:10; background:var(--accent); }
   header { position: sticky; top:env(safe-area-inset-top, 0px); z-index:5; background:var(--accent); color:var(--accent-ink); padding-block:12px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
   header h1 { font-size:18px; margin:0 0 4px; text-wrap: balance; }
+  .headrow { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+  a.lang { color:var(--accent-ink); font-size:14px; text-decoration:underline; white-space:nowrap; flex:none; }
   header .progress { font-size:14px; opacity:.9; font-variant-numeric: tabular-nums; }
   nav { display:flex; gap:8px; overflow-x:auto; padding-block:10px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); background:var(--band); white-space:nowrap; -webkit-overflow-scrolling: touch; }
   nav a { color:var(--accent); text-decoration:none; font-size:14px; padding:6px 10px; background:var(--card); border-radius:16px; border:1px solid var(--line); }
@@ -51,7 +53,7 @@
 </head>
 <body>
 <header>
-  <h1>Camberwell planting plan</h1>
+  <div class="headrow"><h1>Camberwell planting plan</h1><a class="lang" href="https://izaakrogan.github.io/garden/">Português</a></div>
   <div class="progress" id="progress"></div>
 </header>
 <nav><a href="#left-8">Left 8 to 15 m</a><a href="#left-15">Left 15 to 22 m</a><a href="#left-22">Left 22 to 29 m</a><a href="#left-29">Left 29 to 36 m</a><a href="#right-8">Right 8 to 15 m</a><a href="#right-15">Right 15 to 22 m</a><a href="#right-22">Right 22 to 29 m</a><a href="#right-29">Right 29 to 36 m</a><a href="#rear">Rear</a><a href="#house">House beds</a><a href="#map">Whole garden</a><a href="#counts">Count check</a></nav>
