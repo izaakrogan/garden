@@ -17,7 +17,9 @@
   header { position: sticky; top:env(safe-area-inset-top, 0px); z-index:5; background:var(--accent); color:var(--accent-ink); padding-block:12px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
   header h1 { font-size:18px; margin:0 0 4px; text-wrap: balance; }
   .headrow { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
-  a.lang { color:var(--accent-ink); font-size:14px; text-decoration:underline; white-space:nowrap; flex:none; }
+  .tools { display:inline-flex; align-items:center; gap:12px; flex:none; }
+  a.lang { color:var(--accent-ink); font-size:14px; text-decoration:underline; white-space:nowrap; }
+  button.theme { background:none; border:1px solid var(--accent-ink); color:var(--accent-ink); border-radius:14px; padding:3px 10px; font-size:13px; white-space:nowrap; }
   header .progress { font-size:14px; opacity:.9; font-variant-numeric: tabular-nums; }
   nav { display:flex; gap:8px; overflow-x:auto; padding-block:10px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); background:var(--band); white-space:nowrap; -webkit-overflow-scrolling: touch; }
   nav a { color:var(--accent); text-decoration:none; font-size:14px; padding:6px 10px; background:var(--card); border-radius:16px; border:1px solid var(--line); }
@@ -53,7 +55,7 @@
 </head>
 <body>
 <header>
-  <div class="headrow"><h1>Plano de plantio de Camberwell</h1><a class="lang" href="https://izaakrogan.github.io/garden/en/">English</a></div>
+  <div class="headrow"><h1>Plano de plantio de Camberwell</h1><span class="tools"><button type="button" class="theme" id="theme"></button><a class="lang" href="https://izaakrogan.github.io/garden/en/">English</a></span></div>
   <div class="progress" id="progress"></div>
 </header>
 <nav><a href="#left-8">Esquerda 8 a 15 m</a><a href="#left-15">Esquerda 15 a 22 m</a><a href="#left-22">Esquerda 22 a 29 m</a><a href="#left-29">Esquerda 29 a 36 m</a><a href="#right-8">Direita 8 a 15 m</a><a href="#right-15">Direita 15 a 22 m</a><a href="#right-22">Direita 22 a 29 m</a><a href="#right-29">Direita 29 a 36 m</a><a href="#rear">Fundo</a><a href="#house">Casa</a><a href="#map">Jardim inteiro</a><a href="#counts">Conferência</a></nav>
@@ -499,6 +501,24 @@
       save();
       render();
     });
+  });
+  var THEME_KEY = 'camberwell-plan-theme';
+  var themeBtn = document.getElementById('theme');
+  var root = document.documentElement;
+  function currentTheme() {
+    var set = root.getAttribute('data-theme');
+    if (set === 'dark' || set === 'light') return set;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function applyTheme(t) {
+    root.setAttribute('data-theme', t);
+    themeBtn.textContent = t === 'dark' ? "Claro" : "Escuro";
+  }
+  try { var saved = localStorage.getItem(THEME_KEY); if (saved === 'dark' || saved === 'light') applyTheme(saved); else themeBtn.textContent = currentTheme() === 'dark' ? "Claro" : "Escuro"; } catch (e) { themeBtn.textContent = "Escuro"; }
+  themeBtn.addEventListener('click', function () {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
   });
   reset.addEventListener('click', function () {
     if (!armed) {
